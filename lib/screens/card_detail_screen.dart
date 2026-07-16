@@ -9,6 +9,36 @@ class CardDetailScreen extends StatelessWidget {
     required this.card,
   });
 
+  Future<void> showDeleteDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('카드 삭제'),
+          content: const Text('정말 삭제하시겠습니까?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('취소'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+
+                Navigator.pop(context); // 확인창 닫기
+
+                Navigator.pop(context, true); // Home으로 true 전달
+
+              },
+              child: const Text('삭제'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +88,7 @@ class CardDetailScreen extends StatelessWidget {
             const Spacer(),
 
             ElevatedButton.icon(
-              onPressed: () {
-                // 다음 단계에서 연결
-              },
+              onPressed: () {},
               icon: const Icon(Icons.edit),
               label: const Text('수정'),
             ),
@@ -69,7 +97,7 @@ class CardDetailScreen extends StatelessWidget {
 
             ElevatedButton.icon(
               onPressed: () {
-                // 다음 단계에서 연결
+                showDeleteDialog(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
